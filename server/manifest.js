@@ -24,7 +24,17 @@ module.exports = new Confidence.Store({
         plugins: [
             {
                 plugin: '../lib', // Main plugin
-                options: {}
+                options: {
+                    instagram: {
+                        username: process.env.IG_USERNAME,
+                        password: process.env.IG_PASSWORD
+                    },
+                    aws: {
+                        region: process.env.AWS_REGION,
+                        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+                    }
+                }
             },
             {
                 plugin: {

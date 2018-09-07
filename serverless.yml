@@ -1,0 +1,22 @@
+# serverless.yml
+service: adtw
+
+plugins:
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  instagram:
+    handler: server.serverless
+    name: instagram-email
+
+custom:
+  dotenv:
+    path: server/.env
+    include:
+      - NODE_ENV
+      - IG_USERNAME
+      - IG_PASSWORD

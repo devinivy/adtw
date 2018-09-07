@@ -21,12 +21,23 @@ exports.deployment = async (start) => {
     return server;
 };
 
-if (!module.parent) {
+const withDeployment = (getDeployment) => {
 
-    exports.deployment(true);
+    let deployment;
 
-    process.on('unhandledRejection', (err) => {
+    return (handler) => {
 
-        throw err;
-    });
-}
+        return async (event, context) => {
+
+            deployment = deployment || getDeployment();
+
+            context.server = await deployment;
+
+            return await handler(event, context);
+        };
+    };
+};
+
+exports.serverless = withDeployment(exports.deployment)(
+    async (evt, ctx) => await ctx.server.services().serverlessService.instagram(evt, ctx)
+);
